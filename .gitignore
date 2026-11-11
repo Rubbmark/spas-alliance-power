@@ -1,0 +1,4 @@
+local.sqlite*
+.dev.vars*
+.wrangler/
+node_modules/

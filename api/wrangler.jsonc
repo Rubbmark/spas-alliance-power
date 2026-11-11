@@ -1,0 +1,5 @@
+{
+ "name":"spas-power-api","main":"worker.mjs","compatibility_date":"2026-08-01",
+ "vars":{"SITE_ORIGIN":"https://YOUR-ACCOUNT.github.io"},
+ "d1_databases":[{"binding":"DB","database_name":"spas-power","database_id":"REPLACE_WITH_D1_ID"}]
+}

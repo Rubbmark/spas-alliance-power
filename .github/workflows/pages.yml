@@ -1,0 +1,31 @@
+name: Publish alliance tracker
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure API
+        env:
+          API_URL: ${{ vars.TRACKER_API_URL }}
+        run: |
+          node -e "const u=new URL(process.env.API_URL); if(u.protocol!=='https:')throw Error('Set TRACKER_API_URL to the HTTPS API origin');require('fs').writeFileSync('docs/config.js','window.TRACKER_API='+JSON.stringify(u.origin)+';')"
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+      - id: deploy
+        uses: actions/deploy-pages@v4
